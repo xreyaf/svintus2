@@ -21,7 +21,7 @@ const Button = styled(motion.button)`
   background-color: black;
   font-size: 2rem;
   color: white;
-  margin: 0 1rem;
+  margin: 1rem .2rem;
   padding: 1rem;
   border-radius: 1rem;
 `
@@ -35,7 +35,7 @@ const Input = styled(motion.input)`
   margin: 0 1rem;
   padding: 1rem;
   border-radius: 1rem;
-  width: 6rem;
+  width: 2rem;
 `
 
 const Heading = styled.h1`
@@ -50,7 +50,7 @@ const Text = styled.span`
 
 const Image = styled(motion.img)`
   margin-top: 1rem;
-  width: 10%;
+  width: 10rem;
 
 `
 
@@ -88,7 +88,7 @@ const Counter = ({name}) => {
                         dispatch(incrementByAmount(name)(Number(incrementAmount) || 0))
                     }
             >
-                Add Amount
+                add
             </Button>
             <Button style={{backgroundColor: 'red'}} whileTap={{scale: 0.9}} whileHover={{scale: 1.05}}
                     onClick={() => submitForm(name, count)}>upd</Button>

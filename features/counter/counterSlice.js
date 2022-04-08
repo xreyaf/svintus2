@@ -15,12 +15,19 @@ export const createGenericSlice = (sliceName) => {
                 state.value += 1;
             },
             decrement: (state) => {
-                state.value -= 1;
+                if (state.value <= 0) {
+                    state.value = 0
+                } else
+                    state.value -= 1;
             },
             incrementByAmount: (state, {payload}) => {
-                state.value += payload;
+                if (state.value <= 0) {
+                    state.value = 0
+                } else
+                    state.value += Math.abs(payload);
             },
             setState: (state, {payload}) => {
+
                 state.value += payload;
             }
         },
