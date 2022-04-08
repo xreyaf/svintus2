@@ -1,11 +1,10 @@
 import Head from 'next/head'
-import {Provider, useDispatch, useSelector} from "react-redux";
-import {decrement, increment, incrementByAmount, selectCount} from "../features/counter/counterSlice";
-import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {decrement, increment, incrementByAmount, selectCount, setState} from "../features/counter/counterSlice";
+import {useEffect, useState} from "react";
 import {motion} from "framer-motion";
 import styled from "@emotion/styled";
 import {css, Global} from "@emotion/react";
-import store from "../app/store";
 import 'next/server'
 
 const Container = styled.div`
@@ -16,6 +15,7 @@ const Container = styled.div`
 `
 
 const Button = styled(motion.button)`
+  cursor: pointer;
   border: none;
   outline: none;
   background-color: black;
@@ -56,8 +56,21 @@ const Image = styled(motion.img)`
 
 const Counter = ({name}) => {
     const count = useSelector((state) => selectCount(name)(state));
-    const dispatch = useDispatch();
     const [incrementAmount, setIncrementAmount] = useState("2");
+    const dispatch = useDispatch();
+
+    let submitForm = async (name, number) => {
+        let res = await fetch("http://localhost:3000/api/svin", {
+            method: "PUT",
+            body: JSON.stringify({
+                [name]: number,
+            }),
+        });
+        res = await res.json();
+        console.log(res)
+
+    };
+
     return (
         <>
             <Heading>{name.replace('counter', '')}</Heading>
@@ -77,15 +90,36 @@ const Counter = ({name}) => {
             >
                 Add Amount
             </Button>
+            <Button style={{backgroundColor: 'red'}} whileTap={{scale: 0.9}} whileHover={{scale: 1.05}}
+                    onClick={() => submitForm(name, count)}>upd</Button>
         </>
     );
 };
 
-export default function Home({isConnected}) {
+export default function Home() {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await fetch("http://localhost:3000/api/svin", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }).then(responce => responce.json()).then(data => {
+                const counters = data.data
+                delete counters[0]._id
+                for (let index in counters[0]) {
+                    dispatch(setState(index)(counters[0][index]))
+                }
+            });
+        }
+        fetchData()
+    }, [])
+
 
     return (
-
-        <Provider store={store}>
+        <>
             <Global
                 styles={css`
                   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -108,14 +142,7 @@ export default function Home({isConnected}) {
                 <Counter name="counterArseny"/>
                 <Counter name="counterDima"/>
                 <Counter name="counterOksana"/>
-                <>{isConnected ? (
-                    <Heading>You are connected to MongoDB</Heading>
-                ) : (
-                    <Heading>
-                        You are NOT connected to MongoDB
-                    </Heading>
-                )}</>
             </Container>
-        </Provider>
+        </>
     )
 }
