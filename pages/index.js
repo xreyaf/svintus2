@@ -60,7 +60,7 @@ const Counter = ({name}) => {
     const dispatch = useDispatch();
 
     let submitForm = async (name, number) => {
-        let res = await fetch("http://localhost:3000/api/svin", {
+        let res = await fetch("https://svintus228.vercel.app/api/svin", {
             method: "PUT",
             body: JSON.stringify({
                 [name]: number,
@@ -101,7 +101,7 @@ export default function Home() {
 
     useEffect(() => {
         const fetchData = async () => {
-            await fetch("http://localhost:3000/api/svin", {
+            await fetch("https://svintus228.vercel.app/api/svin", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
