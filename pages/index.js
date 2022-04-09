@@ -67,11 +67,9 @@ const Counter = ({name}) => {
         });
         await res.json();
         alert(`${name} updated`);
-        setTimeout(()=>{
+        setTimeout(() => {
             window.location.reload();
-        }, 1000)
-
-
+        }, 1000);
     };
 
     return (
@@ -120,6 +118,19 @@ export default function Home() {
         fetchData()
     }, [])
 
+    const bounceTransition = {
+        y: {
+            duration: 1,
+            yoyo: Infinity,
+            ease: "easeOut",
+        },
+        backgroundColor: {
+            duration: 0,
+            yoyo: Infinity,
+            ease: "easeOut",
+            repeatDelay: 0.8,
+        },
+    }
 
     return (
         <>
@@ -141,9 +152,12 @@ export default function Home() {
             <Container>
                 <Head>
                     <title>Свинтус</title>
+                    <link rel="icon" href="/favicon.ico"/>
                 </Head>
-                <Image animate={{rotate: 360, scale: 1.01}}
-                       transition={{type: 'spring', repeat: Infinity, duration: 3}} src={'/svin.png'}/>
+                <Image transition={bounceTransition}
+                       animate={{
+                           y: [20, 0],
+                       }} src={'/svin.png'}/>
                 <Counter name="counterRoma"/>
                 <Counter name="counterLiza"/>
                 <Counter name="counterArseny"/>
