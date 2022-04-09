@@ -65,8 +65,12 @@ const Counter = ({name}) => {
                 [name]: number,
             }),
         });
-        res = await res.json();
-        console.log(res)
+        await res.json();
+        alert(`${name} updated`);
+        setTimeout(()=>{
+            window.location.reload();
+        }, 1000)
+
 
     };
 
