@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import {useDispatch, useSelector} from "react-redux";
-import {decrement, increment, incrementByAmount, selectCount, setState} from "../features/counter/counterSlice";
-import {useEffect, useState} from "react";
+import {decrement, increment, selectCount, setState} from "../features/counter/counterSlice";
+import {useEffect} from "react";
 import {motion} from "framer-motion";
 import styled from "@emotion/styled";
 import {css, Global} from "@emotion/react";
@@ -10,7 +10,6 @@ import 'next/server'
 const Container = styled.div`
 
   min-height: 100vh;
-  color: white;
   text-align: center;
 `
 
@@ -18,34 +17,34 @@ const Button = styled(motion.button)`
   cursor: pointer;
   border: none;
   outline: none;
-  background-color: black;
+  background-color: #4F453C;
   font-size: 2rem;
-  color: white;
+  color: #CAC9C6;
   margin: 1rem .2rem;
   padding: 1rem;
   border-radius: 1rem;
 `
 
-const Input = styled(motion.input)`
-  border: none;
-  outline: none;
-  background-color: black;
-  font-size: 2rem;
-  color: white;
-  margin: 0 1rem;
-  padding: 1rem;
-  border-radius: 1rem;
-  width: 2rem;
-`
+// const Input = styled(motion.input)`
+//   border: none;
+//   outline: none;
+//   background-color:#4F453C;
+//   font-size: 2rem;
+//   color: #CAC9C6;
+//   margin: 0 1rem;
+//   padding: 1rem;
+//   border-radius: 1rem;
+//   width: 2rem;
+// `
 
 const Heading = styled.h1`
   margin: 0.3rem 0;
-  color: black;
+  color: #918673;
 `
 
 const Text = styled.span`
   font-size: 2rem;
-  color: black;
+  color: #CAC9C6;
 `
 
 const Image = styled(motion.img)`
@@ -56,7 +55,7 @@ const Image = styled(motion.img)`
 
 const Counter = ({name}) => {
     const count = useSelector((state) => selectCount(name)(state));
-    const [incrementAmount, setIncrementAmount] = useState("2");
+    // const [incrementAmount, setIncrementAmount] = useState("2");
     const dispatch = useDispatch();
 
     let submitForm = async (name, number) => {
@@ -79,18 +78,18 @@ const Counter = ({name}) => {
                     onClick={() => dispatch(decrement(name)())}>-1</Button>
             <Button whileTap={{scale: 0.9}} whileHover={{scale: 1.05}}
                     onClick={() => dispatch(increment(name)())}>+1</Button>
-            <Input
-                value={incrementAmount}
-                onChange={(e) => setIncrementAmount(e.target.value)}
-            />
-            <Button whileTap={{scale: 0.9}} whileHover={{scale: 1.05}}
-                    onClick={() =>
-                        dispatch(incrementByAmount(name)(Number(incrementAmount) || 0))
-                    }
-            >
-                add
-            </Button>
-            <Button style={{backgroundColor: 'red'}} whileTap={{scale: 0.9}} whileHover={{scale: 1.05}}
+            {/*<Input*/}
+            {/*    value={incrementAmount}*/}
+            {/*    onChange={(e) => setIncrementAmount(e.target.value)}*/}
+            {/*/>*/}
+            {/*<Button whileTap={{scale: 0.9}} whileHover={{scale: 1.05}}*/}
+            {/*        onClick={() =>*/}
+            {/*            dispatch(incrementByAmount(name)(Number(incrementAmount) || 0))*/}
+            {/*        }*/}
+            {/*>*/}
+            {/*    add*/}
+            {/*</Button>*/}
+            <Button style={{backgroundColor: '#A24D30'}} whileTap={{scale: 0.9}} whileHover={{scale: 1.05}}
                     onClick={() => submitForm(name, count)}>upd</Button>
         </>
     );
@@ -128,6 +127,10 @@ export default function Home() {
                     margin: 0;
                     padding: 0;
                     font-family: 'Poppins', sans-serif;
+                  }
+
+                  body {
+                    background-color: #1E2128;
                   }
                 `}
             />
