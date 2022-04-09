@@ -59,17 +59,22 @@ const Counter = ({name}) => {
     const dispatch = useDispatch();
 
     let submitForm = async (name, number) => {
-        let res = await fetch("https://svintus228.vercel.app/api/svin", {
-            method: "PUT",
-            body: JSON.stringify({
-                [name]: number,
-            }),
-        });
-        await res.json();
-        alert(`${name} updated`);
-        setTimeout(() => {
-            window.location.reload();
-        }, 1000);
+        let isProved = confirm(`Хочешь обновить ${name}?`);
+        if (isProved === true) {
+            let res = await fetch("https://svintus228.vercel.app/api/svin", {
+                method: "PUT",
+                body: JSON.stringify({
+                    [name]: number,
+                }),
+            });
+            await res.json();
+            alert(`${name} updated`);
+            setTimeout(() => {
+                window.location.reload();
+            }, 500);
+        } else {
+            return null;
+        }
     };
 
     return (
