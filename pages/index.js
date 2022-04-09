@@ -68,11 +68,13 @@ const Counter = ({name}) => {
                 }),
             });
             await res.json();
-            alert(`${name} updated`);
             setTimeout(() => {
                 window.location.reload();
             }, 500);
         } else {
+            setTimeout(() => {
+                window.location.reload();
+            }, 500);
             return null;
         }
     };
