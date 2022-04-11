@@ -10,10 +10,14 @@
     "@emotion/styled": "latest",
     "@reduxjs/toolkit": "latest",
     "framer-motion": "latest",
+    "lodash": "^4.17.21",
     "mongodb": "latest",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
     "react-redux": "latest"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.3"
   }
 }
