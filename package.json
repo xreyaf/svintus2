@@ -15,5 +15,8 @@
     "react": "latest",
     "react-dom": "latest",
     "react-redux": "latest"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.3"
   }
 }
