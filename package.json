@@ -10,6 +10,7 @@
     "@emotion/styled": "latest",
     "@reduxjs/toolkit": "latest",
     "framer-motion": "latest",
+    "lodash": "^4.17.21",
     "mongodb": "latest",
     "next": "latest",
     "react": "latest",

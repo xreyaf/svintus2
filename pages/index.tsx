@@ -6,11 +6,14 @@ import {
   selectCount,
   setState,
 } from "../features/counter/counterSlice";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 import { css, Global } from "@emotion/react";
 import "next/server";
+import { useRouter } from "next/router";
+
+const _ = require("lodash");
 
 const Container = styled.div`
   min-height: 100vh;
@@ -60,6 +63,10 @@ const Counter = ({ name }) => {
   const count = useSelector((state) => selectCount(name)(state));
   // const [incrementAmount, setIncrementAmount] = useState("2");
   const dispatch = useDispatch();
+  const router = useRouter();
+  const refreshData = () => {
+    router.replace(router.asPath);
+  };
 
   let submitForm = async (name, number) => {
     let isProved = confirm(`Хочешь обновить ${name}?`);
@@ -72,11 +79,11 @@ const Counter = ({ name }) => {
       });
       await res.json();
       setTimeout(() => {
-        window.location.reload();
+        refreshData();
       }, 500);
     } else {
       setTimeout(() => {
-        window.location.reload();
+        refreshData();
       }, 500);
       return null;
     }
@@ -125,25 +132,35 @@ const Counter = ({ name }) => {
 
 export default function Home() {
   const dispatch = useDispatch();
+  let prevData;
+
+  const fetchData = useCallback(async () => {
+    await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/api/svin`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((responce) => responce.json())
+      .then((data) => {
+        if (_.isEqual(prevData, data)) {
+          return;
+        } else {
+          prevData = _.cloneDeep(data);
+        }
+        const counters = data.data;
+        delete counters[0]._id;
+        for (let index in counters[0]) {
+          dispatch(setState(index)(counters[0][index]));
+        }
+      });
+  }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/api/svin`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((responce) => responce.json())
-        .then((data) => {
-          const counters = data.data;
-          delete counters[0]._id;
-          for (let index in counters[0]) {
-            dispatch(setState(index)(counters[0][index]));
-          }
-        });
-    };
     fetchData();
+
+    const intervalId = setInterval(() => fetchData(), 3000);
+    return () => clearInterval(intervalId);
   }, []);
 
   const bounceTransition = {

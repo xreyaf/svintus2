@@ -25,7 +25,7 @@ export const createGenericSlice = (sliceName) => {
         } else state.value += Math.abs(payload);
       },
       setState: (state, { payload }) => {
-        state.value += payload;
+        state.value = payload;
       },
     },
   });
