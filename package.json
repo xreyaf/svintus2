@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.4.6",
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
     "@reduxjs/toolkit": "latest",
@@ -15,7 +16,9 @@
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-redux": "latest"
+    "react-redux": "latest",
+    "three": "^0.148.0",
+    "vanta": "^0.5.24"
   },
   "devDependencies": {
     "typescript": "^4.6.3"
